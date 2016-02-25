@@ -1,0 +1,12 @@
+.char{
+  color: #292421;
+}
+.charWarning{
+  color:#800000;
+}
+.charDanger{
+  color:#bf0000;
+}
+.charZero{
+  color:red;
+}

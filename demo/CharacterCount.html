@@ -1,0 +1,25 @@
+
+
+<b>Example code:</b><br><br>
+<code>
+  &lt;span class="char" id="charCount@test@10"></span>
+</code>
+<br><br>
+Create a span with class "char".  The ID of the span must have "charCount@[id-of-field-to-watch]@[start-value]".
+
+<ul>
+  <li>Requires jQuery, if you aren't already using it this script is overkill</li>
+  <li>Text color changes at < 1/2 the characters, < 1/4, and at <= 0, getting progressively brighter red.</li>
+  <li>You can override the colors and styles of each of the change over points in CSS</li>
+  <li>To use, drop the CSS file and JS file into your project.  There are only 4 CSS rules, you can put them into your own CSS file if that's easier.</li>
+  <li>Character counting works on all keyboard input as well as right click>copy>paste.</li>
+</ul>
+
+<b>Result:</b><br><br>
+Field name <input type="text" placeholder="Start typing here..." id="test"> <span class="char" id="charCount@test@10"></span> characters remaining
+<br><br>
+Field name 2 <input type="text" placeholder="Start typing here..." id="test2"> <span class="char" id="charCount@test2@23"></span>
+<link rel="stylesheet" type="text/css" href="../css/charactercount.css">
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script type="text/javascript" src="../js/charactercount.js"></script>
