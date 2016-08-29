@@ -7,12 +7,11 @@ var WORDCOUNT = {
     $( document ).ready( function(){
 
       $("span[id^='charCount']").each(function (index, value) {
-
-        // the counter references
+        
         var spanElement = $(this);
         var targetElement = $(this).attr("id");
-
-        // the associated field references
+        
+        // extracted from the span
         var spanStartValue = targetElement.substring(targetElement.lastIndexOf("@") + 1, targetElement.length);
         var targetElementIdRef = $("#" + targetElement.substring(targetElement.indexOf("@") + 1, targetElement.lastIndexOf("@")));
 
