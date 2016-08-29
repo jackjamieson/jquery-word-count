@@ -1,40 +1,56 @@
-$(document).ready(function () {
+var WORDCOUNT = {
 
-  $(  "span[id^='charCount']" ).each(function( index , value) {
+  watchField: function () {
+    
+    var self = this;
+    
+    $( document ).ready( function(){
 
-    var divElement = $(this);
-    var element = $(this).attr("id");
-    var divMax = element.substring(element.lastIndexOf("@")+1, element.length);
+      $("span[id^='charCount']").each(function (index, value) {
 
-    // set the initial value
-    divElement.text(divMax);
+        // the counter references
+        var spanElement = $(this);
+        var targetElement = $(this).attr("id");
 
-    $("#" + element.substring(element.indexOf("@")+1, element.lastIndexOf("@"))).keyup(function() {
+        // the associated field references
+        var spanStartValue = targetElement.substring(targetElement.lastIndexOf("@") + 1, targetElement.length);
+        var targetElementIdRef = $("#" + targetElement.substring(targetElement.indexOf("@") + 1, targetElement.lastIndexOf("@")));
 
-      var numLetters = divMax - ($(this).val().length);
-      divElement.text(numLetters);
+        // set the initial value
+        spanElement.text(spanStartValue);
 
-      cssChange(numLetters, divMax, divElement);
+        // check for existing input
+        if ($(targetElementIdRef).val().length > 0) {
+          self.updateText(spanStartValue, targetElementIdRef, spanElement);
+        }
+
+        // monitor keyup
+        $(targetElementIdRef).keyup(function () {
+          self.updateText(spanStartValue, this, spanElement);
+        });
+
+        // monitor any other input
+        $(targetElementIdRef).bind('input', function () {
+          self.updateText(spanStartValue, this, spanElement);
+        });
+
+      });
     });
+  },
+  
+  updateText : function(spanStartValue, lengthCheckRef, spanElement) {
+    var numLetters = spanStartValue - ($(lengthCheckRef).val().length);
+    spanElement.text(numLetters);
 
-    $("#" + element.substring(element.indexOf("@")+1, element.lastIndexOf("@"))).bind('input', function() {
+    this.cssChange(numLetters, spanStartValue, spanElement);
+  },
 
-      var numLetters = divMax - ($(this).val().length);
-      divElement.text(numLetters);
+  cssChange: function (numLetters, divMax, divElement) {
 
-      cssChange(numLetters, divMax, divElement);
-    });
-
-  });
-
-  function cssChange(numLetters, divMax, divElement){
-
-    if(numLetters <= divMax/2)
-    {
+    if (numLetters <= divMax / 2) {
       divElement.removeClass("charDanger");
       divElement.addClass("charWarning");
-      if(numLetters <= divMax/4)
-      {
+      if (numLetters <= divMax / 4) {
         divElement.addClass("charDanger");
         divElement.removeClass("charWarning");
       }
@@ -47,11 +63,14 @@ $(document).ready(function () {
       divElement.removeClass("charDanger");
       divElement.removeClass("charZero");
     }
-    if(numLetters <= 0)
-    {
+    if (numLetters <= 0) {
       divElement.addClass("charZero");
       divElement.removeClass("charWarning");
       divElement.removeClass("charDanger");
     }
   }
-});
+
+}
+
+// start watching for fields to monitor
+WORDCOUNT.watchField();
